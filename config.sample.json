@@ -13,6 +13,7 @@
     "requestDelay": 1000,
     "snipeDelay": 600000,
     "products": [{
+        "provider": "provider here",
         "name": "name here",
         "url": "url here",
         "recipients": [
@@ -20,6 +21,7 @@
         ]
     }],
     "searches": [{
+        "provider": "provider here",
         "url": "url",
         "keywords": ["keyword1", "keyword2"],
         "recipients": [

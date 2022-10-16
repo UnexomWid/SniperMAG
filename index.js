@@ -12,6 +12,8 @@ import mail from './mail.js';
 const CONFIG_FILE = "./config.json";
 var config;
 
+var providers = {};
+
 // clean - clean the database
 // populate - populate the database without sending notifications, then exit
 var arg = null;
@@ -38,6 +40,14 @@ async function sleep(ms) {
 
 function shouldNotify() {
     return arg !== 'populate' && config.email.notifications === true;
+}
+
+async function getProvider() {
+    if (!providers.hasOwnProperty(entry.provider)) {
+        providers[entry.provider] = await import(`./${provider.toLowerCase()}.js`);
+    }
+
+    return providers[entry.provider];
 }
 
 termkit.terminal.cyan('Sniper');
@@ -91,58 +101,7 @@ if (arg !== 'populate') {
 ok("All good");
 console.log();
 
-// Replace these 2 functions to make the script work for any website
-// =================================================================
-// Scrape data from one product page.
-// Returns { available: Bool, price: Number }
-function scrapeData($) {
-    const available = $(".label-unavailable").length == 0;
-
-    let p = $(".mrg-btm-none.font-size-md.product-new-price");
-    let str = null;
-    let price = null;
-
-    if (p.length == 0) {
-        p = $(".product-new-price");
-        
-        if (p.length != 0) {
-            str = p.text().split(' ')[0];
-        }
-    } else {
-        str = p.text().split(' ')[4];
-    }
-
-    if (str) {
-        price = parseFloat(str.replace(/\./g, '').replace(/,/g, '.'));
-    }
-
-    return {
-        available,
-        price
-    };
-}
-
-// Scrape the search results from a search page.
-// Returns a list of products, aka [{ name: String, url: String }, ...]
-function scrapeSearch($) {
-    const cards = $('#card_grid').children('.card-item');
-
-    let result = [];
-
-    for (const card of cards) {
-        const title = $(card).find('.card-v2-title')[0];
-
-        result.push({
-            name: $(title).text(),
-            url: $(title).attr('href').split('?')[0] // No query, keep the URL clean
-        })
-    }
-
-    return result;
-}
-// =================================================================
-
-// entry: { url: String, keywords: [String] }
+// entry: { url: String, keywords: [String], provider: String }
 // Gets the products from the search results, and adds them to the database.
 // Only the products that have all of the keywords in the name will be included.
 async function search(entry) {
@@ -154,7 +113,7 @@ async function search(entry) {
 
     const $ = load(res);
 
-    const unfiltered = scrapeSearch($);
+    const unfiltered = (await getProvider(entry.provider)).scrapeSearch($);
     let products = [];
 
     for (let product of unfiltered) {
@@ -180,7 +139,7 @@ async function search(entry) {
     await db.populate(products);
 }
 
-// entry: { name: String, url: String, price: Number, status: 'available' | 'unavailable', recipients: [String] }
+// entry: { name: String, url: String, provider: String, price: Number, status: 'available' | 'unavailable', recipients: [String] }
 // Updates the data about a product, and sends notifications if anything changed
 async function snipe(entry) {
     let res = await got.get(entry.url, {
@@ -191,7 +150,7 @@ async function snipe(entry) {
 
     const $ = load(res);
 
-    const { available, price } = scrapeData($);
+    const { available, price } = (await getProvider(entry.provider)).scrapeData($);
 
     const dbAvailable = (entry.status === 'available');
     const dbPrice = entry.price;
