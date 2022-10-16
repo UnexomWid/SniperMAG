@@ -1,4 +1,4 @@
-# About
+# About <a href="https://nodejs.org/en"><img align="right" src="https://img.shields.io/badge/NodeJS-16+-339933?logo=node.js" alt="NodeJS" /></a>
 **SniperMAG** is a product sniper. Basically, it notifies you when a product's stock/price changes,
 and when new products are added. It can be modified to work with any website.
 
@@ -10,14 +10,14 @@ and when new products are added. It can be modified to work with any website.
 
 # Running
 
-If you're running the script for the first time, or you add new products/search queries, it's recommended
+If you're running the script for the first time, or you're adding new products/search queries, it's recommended
 to run the `populate` command. This populates the database with the products, and doesn't send any notifications.
 
 ```sh
 npm run populate
 ```
 
-Otherwise, just run the script normally:
+In any other cases, just run the script normally:
 
 ```sh
 npm start 
@@ -41,3 +41,7 @@ npm run clean
 If you remove products/seach queries from the config, keep in mind that those products will still be stored in the database
 (and, therefore, they will be watched). If you don't want this to happen, simply run a `clean` command followed by `populate`,
 and then just use the script normally with `start`.
+
+# License <a href="https://github.com/UnexomWid/SniperMAG/blob/master/LICENSE"><img align="right" src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT" /></a>
+
+This project is licensed under the [MIT license](https://github.com/UnexomWid/SniperMAG/blob/master/LICENSE).
