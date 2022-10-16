@@ -12,6 +12,7 @@ and when new products are added. It can be modified to work with any website.
 
 If you're running the script for the first time, or you're adding new products/search queries, it's recommended
 to run the `populate` command. This populates the database with the products, and doesn't send any notifications.
+Basically, it's like `start`, but it only runs once in order to populate the database and doesn't spam notifications.
 
 ```sh
 npm run populate
