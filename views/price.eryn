@@ -1,0 +1,17 @@
+[|? context.type === 'subject' |]
+[| context.name |] now has a different price
+[|:? context.type === 'text' |]
+The product [| context.name |] now has a price of [| context.price |]
+
+---
+SniperMAG
+
+Powered by ERYN
+[|:|]
+<p>The product [| context.name |] now has a price of <b>[| context.price |]</b>:</p>
+<a href="[| context.url |]">[| context.url |]</a><br>
+<br>
+<p>---</p>
+<p>SniperMAG</p>
+<p>Powered by <b>ERYN</b></p>
+[|end|]

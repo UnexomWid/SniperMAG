@@ -1,0 +1,29 @@
+{
+    "database": "data/data.db",
+    "email": {
+        "notifications": true,
+        "host": "example.com",
+        "port": 465,
+        "secure": true,
+        "user": "user@example.com",
+        "pass": "password",
+        "name": "SniperMAG",
+        "address": "user@example.com"
+    },
+    "requestDelay": 1000,
+    "snipeDelay": 600000,
+    "products": [{
+        "name": "name here",
+        "url": "url here",
+        "recipients": [
+            "recipient1@example.com"
+        ]
+    }],
+    "searches": [{
+        "url": "url",
+        "keywords": ["keyword1", "keyword2"],
+        "recipients": [
+            "recipient1@example.com"
+        ]
+    }]
+}

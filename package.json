@@ -1,0 +1,24 @@
+{
+  "name": "snipermag",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "populate": "node index.js populate",
+    "clean": "node index.js clean"
+  },
+  "author": "UnexomWid",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "eryn": "^0.3.1",
+    "got": "^12.5.2",
+    "mkdirp": "^1.0.4",
+    "nodemailer": "^6.8.0",
+    "sqlite": "^4.1.2",
+    "sqlite3": "^5.1.2",
+    "terminal-kit": "^3.0.0"
+  }
+}
