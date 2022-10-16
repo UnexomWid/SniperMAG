@@ -6,7 +6,7 @@ and when new products are added. It can be modified to work with any website.
 
 1. Rename the `config.sample.json` file to `config.json`
 2. Enter your email details in the config file (the email address that will send the notifications)
-3. Add products/search queries
+3. Add products/search queries in the config
 
 # Running
 
