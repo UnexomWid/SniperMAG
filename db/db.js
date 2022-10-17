@@ -49,6 +49,7 @@ export default {
                 } else if (result.url !== entry.url ||
                     result.recipients !== JSON.stringify(entry.recipients) ||
                     result.provider !== entry.provider) {
+                        
                     // Entry exists, but has a different data -> overwrite it
                     termkit.terminal.yellow(`[WARN] Product '${entry.name}' was updated; overwriting in the database...\n`);
                     await db.run('UPDATE data SET url=?, provider=?, price=?, status=?, recipients=? WHERE name=?', entry.url, entry.provider, null, 'unavailable', JSON.stringify(entry.recipients), entry.name);

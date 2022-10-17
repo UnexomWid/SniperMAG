@@ -42,12 +42,12 @@ function shouldNotify() {
     return arg !== 'populate' && config.email.notifications === true;
 }
 
-async function getProvider() {
-    if (!providers.hasOwnProperty(entry.provider)) {
-        providers[entry.provider] = await import(`./${provider.toLowerCase()}.js`);
+async function getProvider(provider) {
+    if (!providers.hasOwnProperty(provider)) {
+        providers[provider] = (await import(`./providers/${provider.toLowerCase()}.js`)).default;
     }
 
-    return providers[entry.provider];
+    return providers[provider];
 }
 
 termkit.terminal.cyan('Sniper');
@@ -132,6 +132,7 @@ async function search(entry) {
             continue;
         }
 
+        product.provider = entry.provider;
         product.recipients = entry.recipients;
         products.push(product);
     }
