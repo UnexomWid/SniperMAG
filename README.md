@@ -58,6 +58,14 @@ npm run clean
 
 # Config
 
+There are 2 core elements:
+
+- **product** - has a name and a URL; the product URL will be used to extract the price and status of the product
+- **search query** - a search URL that is used to extract multiple search results (aka products); use this if you want to see
+when a new product becomes available, or to watch multiple products matching a search query;
+each resulting product will be watched for any changes to the price or the status, and the script will also look
+for new products that appear by periodically sending requests to the URL
+
 If you don't feel like reading this whole section, see [Common scenarios](#common-scenarios).
 
 The config file is `config.json`. All of the options listed below should be present in the config.
