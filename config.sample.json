@@ -14,22 +14,22 @@
     "snipeDelay": 300000,
     "maxRetries": 3,
     "products": [{
+        "url": "url here",
+        "name": "name here",
         "provider": "provider here",
         "format": "html",
         "threshold": 0,
-        "name": "name here",
-        "url": "url here",
         "recipients": [
             "recipient1@example.com"
         ]
     }],
     "searches": [{
+        "url": "url",
+        "keywords": ["keyword1", "keyword2"],
         "provider": "provider here",
         "format": "html",
         "searchFormat": "json",
         "threshold": 0,
-        "url": "url",
-        "keywords": ["keyword1", "keyword2"],
         "recipients": [
             "recipient1@example.com"
         ]

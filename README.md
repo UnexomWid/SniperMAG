@@ -146,6 +146,9 @@ In order to scrape content from multiple websites, the script uses so-called pro
 - **scrapeSearch** - takes the HTML/JSON result from a search, and returns a list of products (name + URL)
 
 To create a provider, simply copy the `providers/sample.js` file to `providers/your_provider.js` and change those 2 functions to suit your needs.
+Afterwards, for each product/search query that should use your provider, set `provider: "your_provider"` aka the provider filename without `.js`.
+
+> Providers must be in the `providers` dir
 
 The script supports both HTML and JSON:
 
