@@ -101,7 +101,7 @@ The *'default'* values refer to what the sample config comes with; the script do
 
 ## Common scenarios
 
-#### I just want to scrape a product by its HTML page
+#### I just want to scrape a product by its URL that returns an HTML page
 
 Add an entry to the `products` list, and set `format: "html"`
 
