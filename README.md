@@ -18,9 +18,10 @@ in the hope that it will be useful, but **WITHOUT ANY WARRANTY**.
 
 # Setting up
 
+1. Run `npm i`
 1. Rename the `config.sample.json` file to `config.json`
-2. Enter your email details in the config file (the address is used to send the notifications via nodemailer)
-3. Add products/search queries in the config (see the [config docs](#Config))
+1. Enter your email details in the config file (the address is used to send the notifications via nodemailer)
+1. Add products/search queries in the config (see the [config docs](#Config))
 
 # Running
 
