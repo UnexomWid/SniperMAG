@@ -8,7 +8,7 @@ and when new products are added. It can be modified to work with any website.
 
 ## Disclaimer
 
-This tool was designed to be used on websites that allow scraping and other tools similar to this.
+This tool was designed to be used on websites that allow other tools similar to this to be used.
 Do **NOT** use this tool on websites that forbid scraping, or on websites whose terms of service would be broken
 as a result of using this tool. The author of this project is **NOT RESPONSIBLE** in any way for your own actions,
 as stated in the [license](https://github.com/UnexomWid/SniperMAG/blob/master/LICENSE). This tool distributed
