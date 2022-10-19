@@ -99,25 +99,37 @@ The *'default'* values refer to what the sample config comes with; the script do
 
 Add an entry to the `products` list, and set `format: "html"`
 
+---
+
 #### I'm scraping search results and also the resulting products, both using URLs that return HTML
 
 Use `"html"` for both the `searchFormat` and `format`
+
+---
 
 #### The search URL returns JSON, but each product's URL returns HTML aka the product's page
 
 Use `searchFormat: "json"` and `format: "html"` for the search query
 
+---
+
 #### The search URL returns JSON, just like each product's URL
 
 Use `"json"` for both the `searchFormat` and `format`
+
+---
 
 #### How do I ignore the price of products? I want to always receive notifications, regardless of the price
 
 Set `threshold: 0`
 
+---
+
 #### I (temporarily) don't want to receive any emails
 
 Set `notifications: false` in the `email` object
+
+---
 
 
 # Custom scraping
