@@ -12,18 +12,24 @@ and when new products are added. It can be modified to work with any website.
 
 **TL;DR:**
 
-Your first time using this project:
+If it's the first time using this project:
 
 ```sh
 npm run populate
 npm start
 ```
 
-You changed the config by adding or removing products/search queries:
+If you changed the config by adding or removing products/search queries:
 
 ```sh
 npm run clean
 npm run populate
+npm start
+```
+
+Just run:
+
+```sh
 npm start
 ```
 
