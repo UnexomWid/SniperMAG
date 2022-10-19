@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="img/logo.png" alt="SniperMAG">
+</p>
+
 # About <a href="https://nodejs.org/en"><img align="right" src="https://img.shields.io/badge/NodeJS-16+-339933?logo=node.js" alt="NodeJS" /></a>
 **SniperMAG** is a product sniper. Basically, it notifies you when a product's stock/price changes,
 and when new products are added. It can be modified to work with any website.
