@@ -10,10 +10,13 @@
         "name": "SniperMAG",
         "address": "user@example.com"
     },
-    "requestDelay": 1000,
-    "snipeDelay": 600000,
+    "requestDelay": 500,
+    "snipeDelay": 300000,
+    "maxRetries": 3,
     "products": [{
         "provider": "provider here",
+        "format": "html",
+        "threshold": 0,
         "name": "name here",
         "url": "url here",
         "recipients": [
@@ -22,6 +25,9 @@
     }],
     "searches": [{
         "provider": "provider here",
+        "format": "html",
+        "searchFormat": "json",
+        "threshold": 0,
         "url": "url",
         "keywords": ["keyword1", "keyword2"],
         "recipients": [

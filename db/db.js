@@ -45,14 +45,20 @@ export default {
 
                 if (!result) {
                     // Entry doesn't exist in db -> create it
-                    await db.run('INSERT INTO data(name, url, provider, price, status, recipients) VALUES(?, ?, ?, ?, ?, ?)', entry.name, entry.url, entry.provider, null, 'unavailable', JSON.stringify(entry.recipients));
-                } else if (result.url !== entry.url ||
+                    await db.run('INSERT INTO data(name, url, provider, format, threshold, price, status, recipients) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
+                                  entry.name, entry.url, entry.provider, entry.format, entry.threshold, null, 'unavailable', JSON.stringify(entry.recipients));
+                } else if (
+                    result.url        !== entry.url                        ||
                     result.recipients !== JSON.stringify(entry.recipients) ||
-                    result.provider !== entry.provider) {
-                        
+                    result.provider   !== entry.provider                   ||
+                    result.format     !== entry.format                     ||
+                    result.threshold  !== entry.threshold
+                ) {
+
                     // Entry exists, but has a different data -> overwrite it
                     termkit.terminal.yellow(`[WARN] Product '${entry.name}' was updated; overwriting in the database...\n`);
-                    await db.run('UPDATE data SET url=?, provider=?, price=?, status=?, recipients=? WHERE name=?', entry.url, entry.provider, null, 'unavailable', JSON.stringify(entry.recipients), entry.name);
+                    await db.run('UPDATE data SET url=?, provider=?, format=?, threshold=?, price=?, status=?, recipients=? WHERE name=?',
+                                  entry.url, entry.provider, entry.format, entry.threshold, null, 'unavailable', JSON.stringify(entry.recipients), entry.name);
                 }
             }
         } catch(ex) {

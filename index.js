@@ -2,7 +2,6 @@
  * SniperMAG
  */
 import fs from 'fs';
-import got from 'got';
 import { load } from 'cheerio';
 import termkit from 'terminal-kit';
 
@@ -38,8 +37,9 @@ async function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function shouldNotify() {
-    return arg !== 'populate' && config.email.notifications === true;
+function shouldNotify(threshold, price) {
+    return (!threshold || !price || (price <= threshold)) &&
+           (arg !== 'populate' && config.email.notifications === true);
 }
 
 async function getProvider(provider) {
@@ -48,6 +48,27 @@ async function getProvider(provider) {
     }
 
     return providers[provider];
+}
+
+async function get(url, json = false) {
+    let err = null;
+
+    for (let i = 0; i < config.maxRetries; ++i) {
+        try {
+            const res = await fetch(url, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1) AppleWebKit/533.8.7 (KHTML, like Gecko) Version/4.1 Safari/533.8.7',
+                }
+            });
+
+            return (json ? res.json() : res.text());
+        } catch(ex) {
+            err = ex;
+            await sleep(config.requestDelay);
+        }
+    }
+    
+    return Promise.reject(err);
 }
 
 termkit.terminal.cyan('Sniper');
@@ -105,15 +126,16 @@ console.log();
 // Gets the products from the search results, and adds them to the database.
 // Only the products that have all of the keywords in the name will be included.
 async function search(entry) {
-    let res = await got.get(entry.url, {
-        retry: {
-            limit: 3
-        }
-    }).text();
+    let res;
 
-    const $ = load(res);
+    if (entry.searchFormat.toLowerCase() === 'json') {
+        res = await get(entry.url, true);
+    } else {
+        // HTML
+        res = load(await get(entry.url, false));
+    }
 
-    const unfiltered = (await getProvider(entry.provider)).scrapeSearch($);
+    const unfiltered = (await getProvider(entry.provider)).scrapeSearch(res);
     let products = [];
 
     for (let product of unfiltered) {
@@ -133,6 +155,8 @@ async function search(entry) {
         }
 
         product.provider = entry.provider;
+        product.format = entry.format;
+        product.threshold = entry.threshold;
         product.recipients = entry.recipients;
         products.push(product);
     }
@@ -143,15 +167,16 @@ async function search(entry) {
 // entry: { name: String, url: String, provider: String, price: Number, status: 'available' | 'unavailable', recipients: [String] }
 // Updates the data about a product, and sends notifications if anything changed
 async function snipe(entry) {
-    let res = await got.get(entry.url, {
-        retry: {
-            limit: 3
-        }
-    }).text();
+    let res;
 
-    const $ = load(res);
+    if (entry.format.toLowerCase() === 'json') {
+        res = await get(entry.url, true);
+    } else {
+        // HTML
+        res = load(await get(entry.url, false));
+    }
 
-    const { available, price } = (await getProvider(entry.provider)).scrapeData($);
+    const { available, price } = (await getProvider(entry.provider)).scrapeData(res);
 
     const dbAvailable = (entry.status === 'available');
     const dbPrice = entry.price;
@@ -165,9 +190,16 @@ async function snipe(entry) {
                 price: price
             });
 
-            termkit.terminal.cyan(`[SNIPE] Product '${entry.name}' is now available for a price of ${price ?? '???'}\n`);
+            const notify = shouldNotify(entry.threshold, price);
+            const str = `[SNIPE] [${entry.provider.toUpperCase()}] Product '${entry.name}' is now available for a price of ${price ?? '???'}\n`;
 
-            if (shouldNotify()) {
+            if (notify) {
+                termkit.terminal.green(str);
+            } else {
+                termkit.terminal.cyan(str);
+            }
+
+            if (notify) {
                 await mail.send(config, 'available.eryn', {
                     name: entry.name,
                     url: entry.url,
@@ -186,9 +218,16 @@ async function snipe(entry) {
                 price: price
             });
 
-            termkit.terminal.cyan(`[SNIPE] Product '${entry.name}' now has a price of ${price ?? '???'}\n`);
+            const notify = shouldNotify(entry.threshold, price);
+            const str = `[SNIPE] [${entry.provider.toUpperCase()}] Product '${entry.name}' now has a price of ${price ?? '???'}\n`;
 
-            if (shouldNotify()) {
+            if (notify) {
+                termkit.terminal.green(str);
+            } else {
+                termkit.terminal.cyan(str);
+            }
+
+            if (notify) {
                 await mail.send(config, 'price.eryn', {
                     name: entry.name,
                     url: entry.url,
@@ -204,7 +243,7 @@ async function snipe(entry) {
                 price: null
             });
 
-            termkit.terminal.yellow(`[SNIPE] Product '${entry.name}' is no longer available\n`);
+            termkit.terminal.yellow(`[SNIPE] [${entry.provider.toUpperCase()}] Product '${entry.name}' is no longer available\n`);
 
             if (shouldNotify()) {
                 await mail.send(config, 'unavailable.eryn', {

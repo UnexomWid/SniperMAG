@@ -2,6 +2,8 @@ CREATE TABLE IF NOT EXISTS data (
     name TEXT CONSTRAINT pk_name PRIMARY KEY,
     url TEXT NOT NULL,
     provider TEXT NOT NULL,
+    format TEXT NOT NULL,
+    threshold REAL,
     price REAL,
     status TEXT CHECK(status = 'unavailable' or status = 'available') NOT NULL DEFAULT 'unavailable',
     recipients TEXT
