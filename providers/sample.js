@@ -1,10 +1,10 @@
 /**
  * This is a sample scraper. Change it to suit your needs.
  * 
- * A scraper has 2 functions, both taking the Cheerio $ object.
+ * A scraper has 2 functions, both taking either the Cheerio $ object, or a JS object in the case of JSON.
  * 
- * scrapeData -> takes the page of a product, and extracts the availability and price
- * scrapeSearch -> takes a page containing search results, and extracts all product names and URLs
+ * scrapeData -> takes the page/JSON of a product, and extracts the availability and price
+ * scrapeSearch -> takes a page/JSON containing search results, and extracts all product names and URLs
  */
 export default {
     // Scrape data from one product page.

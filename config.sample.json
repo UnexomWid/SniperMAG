@@ -10,7 +10,7 @@
         "name": "SniperMAG",
         "address": "user@example.com"
     },
-    "requestDelay": 500,
+    "requestDelay": 5000,
     "snipeDelay": 300000,
     "maxRetries": 3,
     "products": [{
