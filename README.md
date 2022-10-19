@@ -93,7 +93,7 @@ The *'default'* values refer to what the sample config comes with; the script do
     - **threshold** - each product resulting from this search query will have this threshold passed to it; see the same field in the **products** config object
     - **recipients** - each product resulting from this search query will have this list passed to it; see the same field in the **products** config object
 
-## Comon scenarios
+## Common scenarios
 
 #### I just want to scrape a product by its HTML page
 
