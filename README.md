@@ -12,7 +12,7 @@ This tool was designed to be used on websites that allow other tools similar to 
 Do **NOT** use this tool on websites that forbid scraping, or on websites whose terms of service would be broken
 as a result of using this tool.
 
-The authors of this project is **NOT RESPONSIBLE** in any way for your own actions,
+The authors of this project are **NOT RESPONSIBLE** in any way for your own actions,
 as stated in the [license](https://github.com/UnexomWid/SniperMAG/blob/master/LICENSE). This tool distributed
 in the hope that it will be useful, but **WITHOUT ANY WARRANTY**.
 
